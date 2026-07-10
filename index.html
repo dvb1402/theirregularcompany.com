@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Irregular Company</title>
+<meta name="description" content="A group of companies engaged in various endeavours, all of which are going fine.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23efeee7'/><circle cx='50' cy='50' r='34' fill='none' stroke='%2396372e' stroke-width='6'/><text x='50' y='63' font-size='38' font-family='Courier New, monospace' fill='%2396372e' text-anchor='middle'>T</text></svg>">
+<style>
+  :root{
+    --desk:#d9d8cd;
+    --paper:#efeee7;
+    --ink:#24231e;
+    --muted:#6f6e60;
+    --rule:#c6c5b6;
+    --stamp:#96372e;
+  }
+  html{background:var(--desk);}
+  body{
+    margin:0;
+    padding:0 12px;
+    font-family:"Times New Roman", Times, serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{
+    max-width:680px;
+    margin:48px auto 72px;
+    background:var(--paper);
+    border:1px solid #b9b8a9;
+    box-shadow:0 1px 0 #b9b8a9, 0 18px 40px rgba(40,39,30,.18);
+    padding:56px 56px 40px;
+    position:relative;
+    box-sizing:border-box;
+  }
+  @media (max-width:740px){
+    .sheet{margin:16px auto 40px; padding:34px 22px 28px;}
+  }
+  .mono{
+    font-family:"Courier New", Courier, monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .docline{
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:10px;
+  }
+  h1{
+    font-size:clamp(44px, 9vw, 76px);
+    line-height:.92;
+    font-weight:400;
+    letter-spacing:-.015em;
+    margin:36px 0 0;
+    text-wrap:balance;
+    text-transform:uppercase;
+  }
+  .thesis{
+    font-size:clamp(19px, 3vw, 23px);
+    font-style:italic;
+    margin:20px 0 0;
+    max-width:30ch;
+  }
+  .stamp{
+    position:absolute;
+    top:130px; right:36px;
+    width:148px; height:148px;
+    border:3px double var(--stamp);
+    border-radius:50%;
+    color:var(--stamp);
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    font-family:"Courier New", Courier, monospace;
+    font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    line-height:1.5;
+    transform:rotate(-9deg);
+    opacity:.85;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+  .stamp b{font-size:14px; letter-spacing:.22em; display:block; margin:3px 0;}
+  @media (max-width:740px){ .stamp{width:118px;height:118px; top:auto; bottom:-46px; right:8px; font-size:9px;} .stamp b{font-size:11px;} }
+  @keyframes thunk{
+    0%{opacity:0; transform:rotate(-9deg) scale(1.6);}
+    60%{opacity:.9; transform:rotate(-9deg) scale(.96);}
+    100%{opacity:.85; transform:rotate(-9deg) scale(1);}
+  }
+  .stamp{animation:thunk .5s cubic-bezier(.2,.9,.3,1.2) .6s backwards;}
+  @media (prefers-reduced-motion:reduce){ .stamp{animation:none;} .redact::after{transition:none;} }
+
+  section{margin-top:56px;}
+  .sec-label{
+    display:flex; align-items:baseline; gap:14px;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:8px; margin-bottom:0;
+  }
+  .sec-label .mono{color:var(--ink);}
+
+  table{width:100%; border-collapse:collapse;}
+  td{
+    padding:13px 0;
+    border-bottom:1px solid var(--rule);
+    vertical-align:baseline;
+    font-size:17px;
+  }
+  td.k{
+    width:44%;
+    font-family:"Courier New", Courier, monospace;
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted);
+    padding-right:16px;
+  }
+  .redact{
+    position:relative;
+    display:inline-block;
+    cursor:help;
+    outline:none;
+    white-space:nowrap;
+  }
+  .redact::after{
+    content:"";
+    position:absolute; inset:1px -3px;
+    background:var(--ink);
+    transition:opacity .25s ease;
+  }
+  .redact:hover::after, .redact:focus-visible::after{opacity:0;}
+  .redact:focus-visible{box-shadow:0 0 0 2px var(--paper), 0 0 0 3.5px var(--ink);}
+
+  .holdings{list-style:none; margin:0; padding:0;}
+  .holdings li{
+    display:flex; gap:20px; align-items:baseline; flex-wrap:wrap;
+    padding:16px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .holdings .name{
+    font-size:26px; font-style:italic; min-width:130px;
+  }
+  .tag{
+    font-family:"Courier New", Courier, monospace;
+    font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--stamp);
+    border:1px solid var(--stamp);
+    padding:3px 8px 2px;
+    white-space:nowrap;
+    align-self:center;
+  }
+  .holdings .desc{font-size:16px; color:var(--ink); flex:1; min-width:220px;}
+  .aside{
+    font-size:15px; color:var(--muted); margin-top:14px; font-style:italic;
+  }
+
+  .faq{margin:0;}
+  .faq dt{
+    font-family:"Courier New", Courier, monospace;
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--muted);
+    padding-top:18px;
+  }
+  .faq dd{
+    margin:6px 0 18px;
+    font-size:22px;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:18px;
+  }
+  .faq dd:last-child{border-bottom:none;}
+
+  .contact p{font-size:17px; line-height:1.55; max-width:52ch; margin:16px 0 0;}
+
+  footer{
+    margin-top:64px;
+    border-top:1px solid var(--ink);
+    padding-top:12px;
+    display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header>
+    <div class="docline">
+      <span class="mono">Doc. No. TIC/PUBLIC/001</span>
+      <span class="mono">Revision: whenever</span>
+    </div>
+    <p class="mono" style="margin-top:10px;">Company profile — for public circulation</p>
+    <h1>The Irregular Company</h1>
+    <p class="thesis">A group of companies engaged in various endeavours, all of which are going fine.</p>
+    <div class="stamp" aria-hidden="true">
+      <span>Disclosed<b>As Needed</b>all in order</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="s1">
+    <div class="sec-label"><span class="mono" id="s1">Section I</span><span class="mono">Particulars</span></div>
+    <table>
+      <tr><td class="k">Registered name</td><td>The Irregular Company</td></tr>
+      <tr><td class="k">Line of business</td><td>General.</td></tr>
+      <tr><td class="k">Established</td><td>A while ago.</td></tr>
+      <tr><td class="k">Headquarters</td><td>Around.</td></tr>
+      <tr><td class="k">Number of employees</td><td>Enough.</td></tr>
+      <tr><td class="k">Annual revenue</td><td><span class="redact" tabindex="0" title="">Sufficient.</span></td></tr>
+      <tr><td class="k">Growth strategy</td><td><span class="redact" tabindex="0" title="">Slowly, then all at once.</span></td></tr>
+    </table>
+    <p class="aside">Redacted fields may be inspected more closely. It will not help.</p>
+  </section>
+
+  <section aria-labelledby="s2">
+    <div class="sec-label"><span class="mono" id="s2">Section II</span><span class="mono">Holdings</span></div>
+    <ul class="holdings">
+      <li><span class="name">Rooms</span><span class="desc">Beds for the night. Breakfasts in the morning. The rest, handled quietly.</span><span class="tag">Principal holding</span></li>
+      <li><span class="name">Appetites</span><span class="desc">Things to eat, things to drink, and agreeable places in which to do both.</span></li>
+      <li><span class="name">Grounds</span><span class="desc">Courts, fields, and other places people visit to run around on purpose.</span></li>
+      <li><span class="name">Floors</span><span class="desc">Large buildings in which things are bought, sold, and strolled past.</span></li>
+      <li><span class="name">Positions</span><span class="desc">Capital, resting productively.</span></li>
+    </ul>
+    <p class="aside">Other subsidiaries exist. They prefer not to be listed.</p>
+  </section>
+
+  <section aria-labelledby="s3">
+    <div class="sec-label"><span class="mono" id="s3">Section III</span><span class="mono">Frequently asked questions</span></div>
+    <dl class="faq">
+      <dt>What exactly does The Irregular Company do?</dt>
+      <dd>Business.</dd>
+      <dt>Where can I see your portfolio?</dt>
+      <dd>You may already have.</dd>
+      <dt>Are you hiring?</dt>
+      <dd>Irregularly.</dd>
+      <dt>Is this website finished?</dt>
+      <dd>Yes.</dd>
+    </dl>
+  </section>
+
+  <section aria-labelledby="s4" class="contact">
+    <div class="sec-label"><span class="mono" id="s4">Section IV</span><span class="mono">Correspondence</span></div>
+    <p>This page does not accept enquiries. The important ones find us anyway.</p>
+    <p class="aside">If you needed to reach us, you would already know how.</p>
+  </section>
+
+  <footer>
+    <span class="mono">© 2026 The Irregular Company. All rights reserved, naturally.</span>
+    <span class="mono">No further information is available. By design.</span>
+  </footer>
+</main>
+</body>
+</html>
