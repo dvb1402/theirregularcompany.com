@@ -48,14 +48,41 @@
     border-bottom:1px solid var(--ink);
     padding-bottom:10px;
   }
-  h1{
-    font-size:clamp(44px, 9vw, 76px);
-    line-height:.92;
-    font-weight:400;
-    letter-spacing:-.015em;
-    margin:36px 0 0;
-    text-wrap:balance;
+  h1.wordmark{
+    margin:44px 0 0;
+    font-family:"Futura", "Avenir Next", "Century Gothic", "Trebuchet MS", sans-serif;
+    color:var(--ink);
+    text-align:center;
+    font-weight:500;
+  }
+  .wordmark .small{
+    display:block;
+    font-size:clamp(13px, 2.2vw, 17px);
+    letter-spacing:.55em;
+    text-indent:.55em;
     text-transform:uppercase;
+  }
+  .wordmark .big{
+    display:flex;
+    justify-content:center;
+    font-size:clamp(36px, 8.2vw, 66px);
+    font-weight:600;
+    text-transform:uppercase;
+    margin:26px 0 22px;
+    line-height:1;
+  }
+  .wordmark .big span{
+    display:inline-block;
+    margin:0 .035em;
+    transform:rotate(var(--r)) translateY(var(--y));
+  }
+  .wordmark .rule{
+    display:block;
+    width:118px;
+    height:5px;
+    background:var(--ink);
+    margin:20px auto 0;
+    transform:rotate(-2.5deg);
   }
   .thesis{
     font-size:clamp(19px, 3vw, 23px);
@@ -65,7 +92,7 @@
   }
   .stamp{
     position:absolute;
-    top:130px; right:36px;
+    top:84px; right:10px;
     width:148px; height:148px;
     border:3px double var(--stamp);
     border-radius:50%;
@@ -184,8 +211,13 @@
       <span class="mono">Revision: whenever</span>
     </div>
     <p class="mono" style="margin-top:10px;">Company profile — for public circulation</p>
-    <h1>The Irregular Company</h1>
-    <p class="thesis">A group of companies engaged in various endeavours, all of which are going fine.</p>
+    <h1 class="wordmark" aria-label="The Irregular Company">
+      <span class="small" aria-hidden="true">The</span>
+      <span class="big" aria-hidden="true"><span style="--r:-7deg;--y:.28em">I</span><span style="--r:12deg;--y:.10em">R</span><span style="--r:-19deg;--y:-.04em">R</span><span style="--r:7deg;--y:-.09em">E</span><span style="--r:-4deg;--y:-.14em">G</span><span style="--r:9deg;--y:-.06em">U</span><span style="--r:-8deg;--y:0em">L</span><span style="--r:5deg;--y:.09em">A</span><span style="--r:16deg;--y:.24em">R</span></span>
+      <span class="small" aria-hidden="true">Company</span>
+      <span class="rule" aria-hidden="true"></span>
+    </h1>
+    <p class="thesis" style="margin:36px auto 0; text-align:center;">A group of companies engaged in various endeavours, all of which are going fine.</p>
     <div class="stamp" aria-hidden="true">
       <span>Disclosed<b>As Needed</b>all in order</span>
     </div>
